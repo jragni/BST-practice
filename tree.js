@@ -13,29 +13,65 @@ class Tree {
   }
 
   /** sumValues(): add up all of the values in the tree. */
-  sumValues(node = this.root, queue = [this.root]) {
-    // BFS implementation
+  sumValues() {
+    let sum = 0;
 
-    if (!node || queue.length === 0) return 0;
-
-    for (let child of node.children) {
-      queue.push(child);
+    function _helperBFS(node = root, queue = [root]) {
+      /// BFS implementation
+      if (!node || queue.length === 0) return;
+      for (let child of node.children) {
+        queue.push(child);
+      }
+      let currentNode = queue.shift();
+      sum += currentNode.val;
+      _helperBFS(queue[0], queue);
     }
-    let currNode = queue.shift();
-
-    return currNode.val + this.sumValues(queue[0], queue);
+    // DFS implementation
+    function _helperDFS(node = root) {
+      if (!node) return;
+      sum += node.val;
+      for (let child of node.children) {
+        _helperDFS(child);
+      }
+    }
+    _helperDFS(this.root);
+    return sum;
   }
   /** countEvens(): count all of the nodes in the tree with even values. */
 
-  countEvens(node = this.root, queue = [this.root]) {
-    if (!node || queue.length === 0) {
+  countEvens() {
+    let count = 0;
+    // BFS implementation
+    function _helperBFS(node, queue = [node]) {
+      if (!node || queue.length === 0) return;
+      for (let child of node.children) {
+        queue.push(child);
+      }
+
+      let currNode = queue.shift();
+      currNode.val % 2 === 0 ? count++ : null;
+      _helperBFS(queue[0], queue);
     }
+
+    // DFS Implementation
+    function _helperDFS(node) {
+      if (!node) return;
+      if (node.val % 2 === 0) count++;
+      for (let child of node.children) {
+        _helperDFS(child);
+      }
+    }
+
+    _helperDFS(this.root);
+    return count;
   }
 
   /** numGreater(lowerBound): return a count of the number of nodes
    * whose value is greater than lowerBound. */
 
-  numGreater(lowerBound) {}
+  numGreater(lowerBound) {
+    let count = 0;
+  }
 
   printBFS(node = this.root, queue = [this.root]) {
     if (!node) return;
