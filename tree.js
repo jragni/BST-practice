@@ -71,6 +71,28 @@ class Tree {
 
   numGreater(lowerBound) {
     let count = 0;
+
+    function _helperBFS(node, queue = [node]) {
+      if (!node || queue.length === 0) return;
+      for (let child of node.children) {
+        queue.push(child);
+      }
+
+      let currNode = queue.shift();
+      currNode.val > lowerBound ? count++ : null;
+      _helperBFS(queue[0], queue);
+    }
+
+    function _helperDFS(node) {
+      if (!node) return;
+      node.val > lowerBound ? count++ : null;
+      for (let child of node.children) {
+        _helperDFS(child);
+      }
+    }
+
+    _helperDFS(this.root);
+    return count;
   }
 
   printBFS(node = this.root, queue = [this.root]) {

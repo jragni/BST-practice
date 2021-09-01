@@ -16,17 +16,54 @@ class BinaryTree {
   /** minDepth(): return the minimum depth of the tree -- that is,
    * the length of the shortest path from the root to a leaf. */
 
-  minDepth() {}
+  minDepth() {
+    if (!this.root) return 0;
+    let min = Infinity;
+    function _helper(node, currentDepth = 1) {
+      if (!node) return;
+      if (node.left) _helper(node.left, currentDepth + 1);
+      if (node.right) _helper(node.right, currentDepth + 1);
+      if (currentDepth < min && !node.left && !node.right) min = currentDepth;
+    }
+
+    _helper(this.root);
+    return min;
+  }
 
   /** maxDepth(): return the maximum depth of the tree -- that is,
    * the length of the longest path from the root to a leaf. */
 
-  maxDepth() {}
+  maxDepth() {
+    if (!this.root) return 0;
+    let max = 0;
+    function _helper(node, currentDepth = 1) {
+      if (!node) return;
+      if (node.left) _helper(node.left, currentDepth + 1);
+      if (node.right) _helper(node.right, currentDepth + 1);
+      if (currentDepth > max && !node.left && !node.right) max = currentDepth;
+    }
+    _helper(this.root);
+    return max;
+  }
 
   /** maxSum(): return the maximum sum you can obtain by traveling along a path in the tree.
    * The path doesn't need to start at the root, but you can't visit a node more than once. */
 
-  maxSum() {}
+  maxSum() {
+    if (!this.root) return 0;
+    let maxSum = 0;
+
+    function _helper(node, currentSum = 0) {
+      if (!node) return;
+      currentSum += node.val;
+      if (currentSum > maxSum) maxSum = currentSum;
+      if (node.left) _helper(node.left, currentSum);
+      if (node.right) _helper(node.right, currentSum);
+    }
+
+    _helper(this.root);
+    return maxSum;
+  }
 
   /** nextLarger(lowerBound): return the smallest value in the tree
    * which is larger than lowerBound. Return null if no such value exists. */
