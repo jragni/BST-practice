@@ -34,16 +34,16 @@ class BinaryTree {
    * the length of the longest path from the root to a leaf. */
 
   maxDepth() {
+    let maxDepth = 0;
     if (!this.root) return 0;
-    let max = 0;
-    function _helper(node, currentDepth = 1) {
-      if (!node) return;
-      if (node.left) _helper(node.left, currentDepth + 1);
-      if (node.right) _helper(node.right, currentDepth + 1);
-      if (currentDepth > max && !node.left && !node.right) max = currentDepth;
+    function _helper(node, depth = 1) {
+      if (node.left) _helper(node.left, depth + 1);
+      if (node.right) _helper(node.right, depth + 1);
+      if (depth > maxDepth) maxDepth = depth;
     }
+
     _helper(this.root);
-    return max;
+    return maxDepth;
   }
 
   /** maxSum(): return the maximum sum you can obtain by traveling along a path in the tree.
@@ -66,7 +66,7 @@ class BinaryTree {
   }
 
   /** nextLarger(lowerBound): return the smallest value in the tree
-   * which is larger than lowerBound. Return null if no such value exists. */
+   * which is larger than lowerBound. Return null if no such value exists.  */
 
   nextLarger(lowerBound) {}
 
@@ -92,5 +92,4 @@ class BinaryTree {
 
   lowestCommonAncestor(node1, node2) {}
 }
-
 module.exports = { BinaryTree, BinaryTreeNode };
